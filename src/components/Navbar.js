@@ -1,15 +1,10 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
 import logo from '../images/logo.svg'
 import { FaAlignRight } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
-import { FaBeer } from 'react-icons/fa';
 
 
 export default class Navbar extends Component {
-    static propTypes = {
-        prop: PropTypes
-    }
 
     state = {
         isOpen: false
