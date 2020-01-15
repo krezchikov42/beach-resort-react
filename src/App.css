@@ -220,7 +220,7 @@ h6 {
   text-transform: capitalize;
   margin-bottom: 1rem;
 }
-.section-title div {
+.section-title .horizontal-line {
   width: 5rem;
   height: 5px;
   margin: 0 auto;
