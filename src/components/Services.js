@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import Title from './Title'
 import {FaCocktail, FaHiking, FaShuttleVan, FaBeer} from "react-icons/fa"
 
-export default class Service extends Component {
+export default class Services extends Component {
     static propTypes = {
         prop: PropTypes
     }
