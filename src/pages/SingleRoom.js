@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import defaultImg from '../images/room-1.jpeg'
 import {Link} from 'react-router-dom'
 import {RoomContext} from '../context'
-import Hero from '../components/Hero'
 import Banner from '../components/Banner'
+import StyledHero from '../components/StyledHero'
 
 
 export class SingleRoom extends Component {
@@ -32,13 +32,13 @@ export class SingleRoom extends Component {
         }
         const {name, description, capacity, size, price, extras, breakfast, pets, images} = room
         return (
-            <Hero hero='roomsHero'>
+            <StyledHero img={images[0]}>
                 <Banner title={`${name} room`} >
                     <Link to='/rooms' className="btn-primary">
                         Back to rooms
                     </Link>
                 </Banner>
-            </Hero>
+            </StyledHero>
         )
     }
 }
