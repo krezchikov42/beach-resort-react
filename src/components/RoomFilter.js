@@ -3,7 +3,7 @@ import { RoomContext } from "../context";
 import Title from "./Title";
 
 export default class RoomFilter extends Component {
-  static contextType = this.context;
+  static contextType = RoomContext;
 
   render() {
     const {

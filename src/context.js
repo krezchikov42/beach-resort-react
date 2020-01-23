@@ -61,7 +61,24 @@ class RoomProvider extends Component {
   };
 
   filterRooms = () => {
-    console.log("filter rooms");
+    const {
+      rooms,
+      type,
+      capacity,
+      price,
+      min_price,
+      max_price,
+      min_size,
+      max_size,
+      breakfast,
+      pets
+    } = this.state;
+    let temp_items = [...rooms];
+    if (type !== "all") {
+      temp_items = temp_items.filter(room => room.type === type);
+    }
+
+    this.setState({ sorted_rooms: temp_items });
   };
 
   render() {
@@ -69,7 +86,8 @@ class RoomProvider extends Component {
       <RoomContext.Provider
         value={{
           ...this.state,
-          getRoom: this.getRoom
+          getRoom: this.getRoom,
+          handleChange: this.handleChange
         }}
       >
         {this.props.children}
