@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import items from "./data";
+// import items from "./data";
+import Client from "./Contenful";
 const RoomContext = React.createContext();
 
 class RoomProvider extends Component {
@@ -22,24 +23,36 @@ class RoomProvider extends Component {
     };
   }
 
+  getData = async () => {
+    try {
+      let response = await Client.getEntries({
+        content_type: "beachResortRoom",
+        order: "fields.price"
+      });
+      let rooms = this.formatData(response.items);
+      let featured_rooms = rooms.filter(room => room.featured);
+      let max_price = Math.max(...rooms.map(room => room.price));
+      let max_size = Math.max(...rooms.map(room => room.size));
+      console.log(max_price);
+      this.setState({
+        rooms,
+        sorted_rooms: rooms,
+        featured_rooms,
+        price: max_price,
+        max_price,
+        max_size
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   componentDidMount() {
-    let rooms = this.formatData(items);
-    let featured_rooms = rooms.filter(room => room.featured);
-    let max_price = Math.max(...rooms.map(room => room.price));
-    let max_size = Math.max(...rooms.map(room => room.size));
-    console.log(max_price);
-    this.setState({
-      rooms,
-      sorted_rooms: rooms,
-      featured_rooms,
-      price: max_price,
-      max_price,
-      max_size
-    });
+    this.getData();
   }
 
   formatData(data) {
-    let temp_items = items.map(item => {
+    let temp_items = data.map(item => {
       let id = item.sys.id;
       let images = item.fields.images.map(image => image.fields.file.url);
       let room = { ...item.fields, images, id };
