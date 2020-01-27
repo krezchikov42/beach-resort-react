@@ -25,8 +25,9 @@ class RoomProvider extends Component {
   componentDidMount() {
     let rooms = this.formatData(items);
     let featured_rooms = rooms.filter(room => room.featured);
-    let max_price = Math.max(rooms.map(room => room.price));
-    let max_size = Math.max(rooms.map(room => room.size));
+    let max_price = Math.max(...rooms.map(room => room.price));
+    let max_size = Math.max(...rooms.map(room => room.size));
+    console.log(max_price);
     this.setState({
       rooms,
       sorted_rooms: rooms,
@@ -55,13 +56,13 @@ class RoomProvider extends Component {
 
   handleChange = event => {
     const target = event.target;
-    const value = event.type === "checkbox" ? target.checked : target.value;
+    const value = target.type === "checkbox" ? target.checked : target.value;
     const name = event.target.name;
     this.setState({ [name]: value }, this.filterRooms);
   };
 
   filterRooms = () => {
-    const {
+    let {
       rooms,
       type,
       capacity,
@@ -73,9 +74,21 @@ class RoomProvider extends Component {
       breakfast,
       pets
     } = this.state;
+    capacity = parseInt(capacity);
     let temp_items = [...rooms];
     if (type !== "all") {
       temp_items = temp_items.filter(room => room.type === type);
+    }
+    temp_items = temp_items.filter(room => room.capacity >= capacity);
+    temp_items = temp_items.filter(room => room.price <= price);
+    temp_items = temp_items.filter(
+      room => room.size >= min_size && room.size <= max_size
+    );
+    if (breakfast) {
+      temp_items = temp_items.filter(room => room.breakfast === breakfast);
+    }
+    if (pets) {
+      temp_items = temp_items.filter(room => room.pets === pets);
     }
 
     this.setState({ sorted_rooms: temp_items });
